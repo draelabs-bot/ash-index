@@ -8,7 +8,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.04, 0.045, 0.04, 1)
 script = ExtResource("1_grxu2")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -21,23 +21,35 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-text = "GAME OVER"
+theme_override_colors/font_color = Color(0.7, 0.68, 0.62, 1)
+text = "RUN FAILED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LoadButton" type="Button" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(64, 16)
+[node name="Flavor" type="Label" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Load Game"
+theme_override_colors/font_color = Color(0.48, 0.5, 0.46, 1)
+theme_override_font_sizes/font_size = 8
+text = "Vitals gone, or Cognitive Bleed maxed.
+Retry from Dust Mouth."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RetryButton" type="Button" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(96, 16)
+layout_mode = 2
+text = "Retry Dust Mouth"
 
 [node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(64, 16)
+custom_minimum_size = Vector2(96, 16)
 layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

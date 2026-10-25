@@ -5,3 +5,4 @@
 [node name="PlayerStats" type="Node"]
 script = ExtResource("1_qydmx")
 max_health = 4
+max_ammo = 36

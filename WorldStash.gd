@@ -4,7 +4,8 @@ var data = {}
 
 func get_id(node, position):
 	var level = MainInstances.level
-	return level.name + "_" + node.name + "_" + str(position)
+	var level_name = level.name if level else "orphan"
+	return level_name + "_" + node.name + "_" + str(position)
 
 func stash(id, key, value):
 	if not data.has(id): data[id] = {}

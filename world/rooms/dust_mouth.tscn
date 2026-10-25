@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdustmouthroom1"]
+
+[ext_resource type="Script" path="res://world/rooms/dust_mouth.gd" id="1_room"]
+[ext_resource type="PackedScene" uid="uid://bb2r2qecqbrbn" path="res://world/door.tscn" id="2_door"]
+[ext_resource type="Resource" uid="uid://bdusttithedoor1" path="res://world/doors/dust_tithe.tres" id="3_conn"]
+[ext_resource type="PackedScene" uid="uid://bad7fd4y6y5p1" path="res://world/camera_limits.tscn" id="4_cam"]
+[ext_resource type="PackedScene" uid="uid://xi8r5aa3olse" path="res://enemies/walking_enemy.tscn" id="5_scav"]
+
+[node name="DustMouth" type="Node2D"]
+script = ExtResource("1_room")
+room_title = "Dust Mouth"
+
+[node name="Backdrop" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 480.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.08, 0.09, 0.085, 1)
+
+[node name="AshVeil" type="ColorRect" parent="."]
+z_index = -9
+offset_right = 480.0
+offset_bottom = 64.0
+mouse_filter = 2
+color = Color(0.12, 0.12, 0.11, 0.35)
+
+[node name="RoomTitle" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.62, 0.65, 0.6, 1)
+theme_override_font_sizes/font_size = 8
+text = "Dust Mouth"
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 36.0
+offset_right = 420.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.5, 0.52, 0.48, 1)
+theme_override_font_sizes/font_size = 8
+text = "…"
+autowrap_mode = 2
+
+[node name="Scavenger" parent="." instance=ExtResource("5_scav")]
+position = Vector2(300, 160)
+speed = 16.0
+
+[node name="DoorToTithe" parent="." instance=ExtResource("2_door")]
+position = Vector2(464, 160)
+new_level_path = "res://world/rooms/tithe_bay.tscn"
+connection = ExtResource("3_conn")
+
+[node name="CameraLimits" parent="." instance=ExtResource("4_cam")]
+offset_right = 480.0
+offset_bottom = 180.0

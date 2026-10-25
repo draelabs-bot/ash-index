@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://btithebayroom01"]
+
+[ext_resource type="Script" path="res://world/rooms/tithe_bay.gd" id="1_room"]
+[ext_resource type="PackedScene" uid="uid://bb2r2qecqbrbn" path="res://world/door.tscn" id="2_door"]
+[ext_resource type="Resource" uid="uid://bdusttithedoor1" path="res://world/doors/dust_tithe.tres" id="3_back"]
+[ext_resource type="Resource" uid="uid://btithecoulpdoor" path="res://world/doors/tithe_coupler.tres" id="4_fwd"]
+[ext_resource type="PackedScene" uid="uid://bad7fd4y6y5p1" path="res://world/camera_limits.tscn" id="5_cam"]
+[ext_resource type="PackedScene" uid="uid://xi8r5aa3olse" path="res://enemies/walking_enemy.tscn" id="6_scav"]
+[ext_resource type="PackedScene" uid="uid://c7yj7h7haknmp" path="res://enemies/flying_enemy.tscn" id="7_drone"]
+[ext_resource type="PackedScene" uid="uid://bindexpointash01" path="res://world/index_point.tscn" id="8_idx"]
+[ext_resource type="PackedScene" uid="uid://bammoashpickup1" path="res://player/ammo_pickup.tscn" id="9_ammo"]
+
+[node name="TitheBay" type="Node2D"]
+script = ExtResource("1_room")
+room_title = "Tithe Bay"
+
+[node name="Backdrop" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 520.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.07, 0.08, 0.075, 1)
+
+[node name="AshVeil" type="ColorRect" parent="."]
+z_index = -9
+offset_right = 520.0
+offset_bottom = 56.0
+mouse_filter = 2
+color = Color(0.11, 0.11, 0.1, 0.4)
+
+[node name="RoomTitle" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.62, 0.65, 0.6, 1)
+theme_override_font_sizes/font_size = 8
+text = "Tithe Bay"
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 36.0
+offset_right = 460.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.5, 0.52, 0.48, 1)
+theme_override_font_sizes/font_size = 8
+text = "…"
+autowrap_mode = 2
+
+[node name="Scavenger" parent="." instance=ExtResource("6_scav")]
+position = Vector2(220, 160)
+
+[node name="Scavenger2" parent="." instance=ExtResource("6_scav")]
+position = Vector2(380, 160)
+speed = 22.0
+
+[node name="WardDrone" parent="." instance=ExtResource("7_drone")]
+position = Vector2(300, 72)
+
+[node name="IndexPoint" parent="." instance=ExtResource("8_idx")]
+position = Vector2(188, 120)
+point_id = "tithe_bay_console"
+lore_line = "Tithe stamp intact. Scar console underneath — logged."
+
+[node name="AmmoPickup" parent="." instance=ExtResource("9_ammo")]
+position = Vector2(360, 120)
+
+[node name="DoorToDust" parent="." instance=ExtResource("2_door")]
+position = Vector2(16, 160)
+new_level_path = "res://world/rooms/dust_mouth.tscn"
+connection = ExtResource("3_back")
+
+[node name="DoorToCoupler" parent="." instance=ExtResource("2_door")]
+position = Vector2(504, 160)
+new_level_path = "res://world/rooms/coupler_alcove.tscn"
+connection = ExtResource("4_fwd")
+
+[node name="CameraLimits" parent="." instance=ExtResource("5_cam")]
+offset_right = 520.0
+offset_bottom = 180.0

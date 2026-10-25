@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://bextractlockrm1"]
+
+[ext_resource type="Script" path="res://world/rooms/extract_lock.gd" id="1_room"]
+[ext_resource type="PackedScene" uid="uid://bb2r2qecqbrbn" path="res://world/door.tscn" id="2_door"]
+[ext_resource type="Resource" uid="uid://bscarextractdor" path="res://world/doors/scar_extract.tres" id="3_back"]
+[ext_resource type="PackedScene" uid="uid://bad7fd4y6y5p1" path="res://world/camera_limits.tscn" id="4_cam"]
+[ext_resource type="PackedScene" uid="uid://xi8r5aa3olse" path="res://enemies/walking_enemy.tscn" id="5_scav"]
+
+[node name="ExtractLock" type="Node2D"]
+script = ExtResource("1_room")
+room_title = "Extract Lock"
+
+[node name="Backdrop" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 360.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.05, 0.055, 0.06, 1)
+
+[node name="RoomTitle" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.62, 0.65, 0.6, 1)
+theme_override_font_sizes/font_size = 8
+text = "Extract Lock"
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 36.0
+offset_right = 300.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.5, 0.52, 0.48, 1)
+theme_override_font_sizes/font_size = 8
+text = "Clear the last scavengers. Then choose."
+
+[node name="Scavenger" parent="." instance=ExtResource("5_scav")]
+position = Vector2(200, 160)
+
+[node name="Scavenger2" parent="." instance=ExtResource("5_scav")]
+position = Vector2(260, 160)
+speed = 26.0
+
+[node name="DoorToScar" parent="." instance=ExtResource("2_door")]
+position = Vector2(16, 160)
+new_level_path = "res://world/rooms/scar_shaft.tscn"
+connection = ExtResource("3_back")
+
+[node name="CameraLimits" parent="." instance=ExtResource("4_cam")]
+offset_right = 360.0
+offset_bottom = 180.0
+
+[node name="ExtractUI" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Panel" type="ColorRect" parent="ExtractUI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -70.0
+offset_right = 110.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.08, 0.09, 0.085, 0.92)
+
+[node name="Status" type="Label" parent="ExtractUI/Panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 214.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.7, 0.72, 0.68, 1)
+theme_override_font_sizes/font_size = 8
+text = "Index tags 0 / 3"
+autowrap_mode = 2
+
+[node name="PublishButton" type="Button" parent="ExtractUI/Panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 32.0
+offset_right = 104.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 8
+text = "Publish"
+
+[node name="RedactButton" type="Button" parent="ExtractUI/Panel"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 210.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 8
+text = "Redact"
+
+[node name="Ending" type="Label" parent="ExtractUI/Panel"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 214.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.75, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 8
+text = "…"
+autowrap_mode = 2

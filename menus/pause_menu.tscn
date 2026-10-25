@@ -27,7 +27,8 @@ layout_mode = 2
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-text = "GAME PAUSED"
+theme_override_colors/font_color = Color(0.7, 0.72, 0.68, 1)
+text = "INDEX PAUSED"
 horizontal_alignment = 1
 vertical_alignment = 1
 

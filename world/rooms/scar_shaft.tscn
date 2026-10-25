@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://bscarshaftroom1"]
+
+[ext_resource type="Script" path="res://world/rooms/scar_shaft.gd" id="1_room"]
+[ext_resource type="PackedScene" uid="uid://bb2r2qecqbrbn" path="res://world/door.tscn" id="2_door"]
+[ext_resource type="Resource" uid="uid://bwardscardoor01" path="res://world/doors/ward_scar.tres" id="3_back"]
+[ext_resource type="Resource" uid="uid://bscarextractdor" path="res://world/doors/scar_extract.tres" id="4_fwd"]
+[ext_resource type="PackedScene" uid="uid://bad7fd4y6y5p1" path="res://world/camera_limits.tscn" id="5_cam"]
+[ext_resource type="PackedScene" uid="uid://xi8r5aa3olse" path="res://enemies/walking_enemy.tscn" id="6_scav"]
+[ext_resource type="PackedScene" uid="uid://c7yj7h7haknmp" path="res://enemies/flying_enemy.tscn" id="7_drone"]
+[ext_resource type="PackedScene" uid="uid://bscarhuskash001" path="res://enemies/scar_husk.tscn" id="8_husk"]
+[ext_resource type="PackedScene" uid="uid://bindexpointash01" path="res://world/index_point.tscn" id="9_idx"]
+
+[node name="ScarShaft" type="Node2D"]
+script = ExtResource("1_room")
+room_title = "Scar Shaft"
+
+[node name="Backdrop" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 320.0
+mouse_filter = 2
+color = Color(0.05, 0.06, 0.055, 1)
+
+[node name="RoomTitle" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 36.0
+theme_override_colors/font_color = Color(0.62, 0.65, 0.6, 1)
+theme_override_font_sizes/font_size = 8
+text = "Scar Shaft"
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 36.0
+offset_right = 300.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.5, 0.52, 0.48, 1)
+theme_override_font_sizes/font_size = 8
+text = "…"
+autowrap_mode = 2
+
+[node name="Scavenger" parent="." instance=ExtResource("6_scav")]
+position = Vector2(100, 300)
+
+[node name="ScarHusk" parent="." instance=ExtResource("8_husk")]
+position = Vector2(240, 210)
+
+[node name="WardDrone" parent="." instance=ExtResource("7_drone")]
+position = Vector2(160, 140)
+
+[node name="WardDrone2" parent="." instance=ExtResource("7_drone")]
+position = Vector2(120, 90)
+
+[node name="IndexPoint" parent="." instance=ExtResource("9_idx")]
+position = Vector2(120, 72)
+point_id = "scar_shaft_node"
+lore_line = "Shaft node scars the Field. Three tags — extract will listen."
+
+[node name="DoorToWard" parent="." instance=ExtResource("2_door")]
+position = Vector2(16, 300)
+new_level_path = "res://world/rooms/ward_gallery.tscn"
+connection = ExtResource("3_back")
+
+[node name="DoorToExtract" parent="." instance=ExtResource("2_door")]
+position = Vector2(304, 72)
+new_level_path = "res://world/rooms/extract_lock.tscn"
+connection = ExtResource("4_fwd")
+
+[node name="CameraLimits" parent="." instance=ExtResource("5_cam")]
+offset_right = 320.0
+offset_bottom = 320.0

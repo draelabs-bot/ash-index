@@ -4,6 +4,7 @@ extends CharacterBody2D
 const DustEffectScene = preload("res://effects/dust_effect.tscn")
 const JumpEffectScene = preload("res://effects/jump_effect.tscn")
 const WallJumpEffectScene = preload("res://effects/wall_jump_effect.tscn")
+const CouplerPulseScene = preload("res://player/coupler_pulse.tscn")
 
 @export var acceleration = 512
 @export var max_velocity = 64
@@ -14,6 +15,7 @@ const WallJumpEffectScene = preload("res://effects/wall_jump_effect.tscn")
 @export var max_fall_velocity = 128
 @export var wall_slide_speed = 42
 @export var max_wall_slide_speed = 128
+@export var coupler_pulse_duration = 2.4
 
 var air_jump = false
 var state = move_state
@@ -31,23 +33,42 @@ var state = move_state
 
 func _ready():
 	PlayerStats.no_health.connect(die)
+	PlayerStats.bleed_collapsed.connect(_on_bleed_collapsed)
 
 func _enter_tree():
 	MainInstances.player = self
 
 func _physics_process(delta):
 	state.call(delta)
-		
+
 	if Input.is_action_pressed("fire") and fire_rate_timer.time_left == 0:
-		fire_rate_timer.start()
-		player_blaster.fire_bullet()
-	
-	if (Input.is_action_pressed("fire_missile")
-	and fire_rate_timer.time_left == 0
-	and PlayerStats.missiles > 0):
-		fire_rate_timer.start()
-		player_blaster.fire_missile()
-		PlayerStats.missiles -= 1
+		_try_fire_rifle()
+
+	if Input.is_action_just_pressed("fire_missile") and fire_rate_timer.time_left == 0:
+		_try_fire_coupler()
+
+func _try_fire_rifle():
+	fire_rate_timer.start()
+	if not PlayerStats.can_fire_rifle():
+		Sound.play(Sound.click, 1.2, -8.0)
+		return
+	PlayerStats.spend_ammo(1)
+	player_blaster.fire_bullet()
+
+func _try_fire_coupler():
+	if not PlayerStats.coupler_unlocked:
+		Sound.play(Sound.click, 0.7, -12.0)
+		return
+	if not PlayerStats.use_coupler_pulse():
+		Sound.play(Sound.click, 0.55, -10.0)
+		return
+	fire_rate_timer.start()
+	Events.add_screenshake.emit(2.5, 0.35)
+	var pulse = Utils.instantiate_scene_on_level(CouplerPulseScene, center.global_position)
+	if pulse:
+		pulse.setup(coupler_pulse_duration)
+	Events.coupler_pulse.emit(coupler_pulse_duration)
+	Sound.play(Sound.explosion, 0.55, -6.0)
 
 func _exit_tree():
 	MainInstances.player = null
@@ -137,14 +158,14 @@ func apply_friction(delta):
 func jump_check():
 	if is_on_floor():
 		air_jump = true
-	
+
 	if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 		if Input.is_action_just_pressed("jump"):
 			jump(jump_force)
 	if not is_on_floor():
 		if Input.is_action_just_released("jump") and velocity.y < -jump_force / 2:
 			velocity.y = -jump_force / 2
-		
+
 		if Input.is_action_just_pressed("jump") and air_jump:
 			jump(jump_force * 0.75)
 			air_jump = false
@@ -163,13 +184,20 @@ func update_animations(input_axis):
 		animation_player.speed_scale = input_axis * sprite_2d.scale.x
 	else:
 		animation_player.play("idle")
-	
+
 	if not is_on_floor():
 		animation_player.play("jump")
 
 func die():
 	camera_2d.reparent(get_tree().current_scene)
 	queue_free()
+	Events.run_failed.emit("vitals")
+	Events.player_died.emit()
+
+func _on_bleed_collapsed():
+	camera_2d.reparent(get_tree().current_scene)
+	queue_free()
+	Events.run_failed.emit("bleed")
 	Events.player_died.emit()
 
 func _on_drop_timer_timeout():

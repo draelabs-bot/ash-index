@@ -1,7 +1,7 @@
 extends Node
 
 const TEST_PATH = "res://save.txt"
-const PROD_PATH = "user://metroidvania_save.save"
+const PROD_PATH = "user://ash_index_save.save"
 
 var save_path = TEST_PATH
 var is_loading = false
