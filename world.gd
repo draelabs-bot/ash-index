@@ -1,20 +1,20 @@
 class_name World
 extends Node2D
 
-@onready var level: = $LevelOne
+@onready var level: = $DustMouth
 
 func _enter_tree():
 	MainInstances.world = self
 
 func _ready():
-	RenderingServer.set_default_clear_color(Color.BLACK)
+	RenderingServer.set_default_clear_color(Color(0.05, 0.06, 0.055, 1))
 	Events.door_entered.connect(change_levels)
 	Events.player_died.connect(game_over)
 	Music.play(Music.main_theme)
 	if SaveManager.is_loading:
-		print(WorldStash.data)
 		SaveManager.load_game()
 		SaveManager.is_loading = false
+
 func _exit_tree():
 	MainInstances.world = null
 

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bindexuiash0001"]
+
+[ext_resource type="Script" path="res://ui/index_ui.gd" id="1_idx"]
+
+[node name="IndexUI" type="Label"]
+offset_right = 72.0
+offset_bottom = 10.0
+theme_override_colors/font_color = Color(0.6, 0.68, 0.62, 1)
+theme_override_font_sizes/font_size = 8
+text = "INDEX 0/3"
+script = ExtResource("1_idx")

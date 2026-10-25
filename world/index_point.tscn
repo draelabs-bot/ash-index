@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://bindexpointash01"]
+
+[ext_resource type="Script" path="res://world/index_point.gd" id="1_idx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_idx"]
+size = Vector2(20, 28)
+
+[node name="IndexPoint" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+monitoring = true
+script = ExtResource("1_idx")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 8.0
+offset_bottom = 0.0
+color = Color(0.28, 0.3, 0.27, 0.95)
+
+[node name="Scar" type="ColorRect" parent="."]
+offset_left = -3.0
+offset_top = -18.0
+offset_right = 3.0
+offset_bottom = -6.0
+color = Color(0.5, 0.55, 0.48, 0.7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_idx")
+
+[node name="Prompt" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 48.0
+offset_bottom = -28.0
+theme_override_colors/font_color = Color(0.75, 0.78, 0.72, 1)
+theme_override_font_sizes/font_size = 8
+text = "F — tag index"
+horizontal_alignment = 1
+
+[node name="Lore" type="Label" parent="."]
+visible = false
+offset_left = -72.0
+offset_top = -56.0
+offset_right = 72.0
+offset_bottom = -40.0
+theme_override_colors/font_color = Color(0.7, 0.72, 0.68, 1)
+theme_override_font_sizes/font_size = 8
+text = "…"
+horizontal_alignment = 1
+autowrap_mode = 2

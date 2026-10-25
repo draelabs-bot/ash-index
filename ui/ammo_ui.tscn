@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bammoashui0001"]
+
+[ext_resource type="Script" path="res://ui/ammo_ui.gd" id="1_ammo"]
+
+[node name="AmmoUI" type="HBoxContainer"]
+offset_right = 64.0
+offset_bottom = 10.0
+script = ExtResource("1_ammo")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.68, 0.55, 1)
+theme_override_font_sizes/font_size = 8
+text = "AMMO 36"
